@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KLY — Size Chart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#f7d6d2;
+      --pink-soft:#f3c5c1;
+      --dark-pink:#ce8a89;
+      --text:#5b2a2a;
+      --white:#ffffff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:Poppins, Arial, sans-serif;
+      background:#faf5f3;
+      color:var(--text);
+    }
+
+    /* NAVBAR */
+    nav{
+      width:100%;
+      background:var(--pink);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    }
+    nav .logo{
+      font-size:24px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-family:"Playfair Display", serif;
+    }
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:28px;
+    }
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:500;
+      transition:.2s;
+    }
+    nav a:hover{color:var(--dark-pink)}
+
+    /* HEADER */
+    .header{
+      text-align:center;
+      padding:60px 20px 20px;
+    }
+    .header h1{
+      font-family:'Playfair Display', serif;
+      font-size:48px;
+      color:var(--dark-pink);
+    }
+    .header p{
+      margin-top:14px;
+      font-size:17px;
+      max-width:700px;
+      margin-left:auto;margin-right:auto;
+      color:#966;
+    }
+
+    /* TABLE */
+    .table-container{
+      max-width:900px;
+      margin:40px auto 80px;
+      background:var(--white);
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:16px;
+    }
+    th, td{
+      border:1px solid #e5c4c4;
+      padding:14px;
+      text-align:center;
+    }
+    th{
+      background:var(--pink-soft);
+      font-weight:600;
+      font-family:'Playfair Display', serif;
+    }
+    tr:nth-child(even){background:#f9eeee}
+
+    /* FOOTER */
+    footer{
+      background:var(--pink);
+      color:var(--text);
+      padding:45px 40px;
+      margin-top:40px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:60px;
+      margin-bottom:40px;
+    }
+
+    footer h4{
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:18px;
+    }
+
+    footer p, footer li{
+      font-size:14px;
+      opacity:0.9;
+      line-height:1.7;
+      margin-bottom:8px;
+      list-style:none;
+    }
+
+    .email-box{
+      width:100%;
+      padding:14px 12px;
+      font-size:15px;
+      border-radius:6px;
+      border:none;
+      margin:8px 0 18px;
+    }
+
+    .gender-btn{
+      border:1px solid var(--text);
+      background:none;
+      padding:10px 18px;
+      margin-right:10px;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .gender-btn:hover{
+      background:var(--white);
+    }
+
+    /* FOOTNOTE */
+    .note{
+      text-align:center;
+      margin-top:16px;
+      font-size:14px;
+      color:#977;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">🦋 KLY</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="katalog.html">Katalog</a></li>
+      <li><a href="size.html">Size Chart</a></li>
+      <li><a href="kontak.html">Kontak</a></li>
+      <li><a href="#">🔍</a></li>
+    </ul>
+      <div class="menu-toggle" onclick="toggleMenu()"></div>
+  </nav>
+
+
+  <!-- HEADING -->
+  <section class="header">
+    <h1>Size Chart Gelang</h1>
+    <p>Panduan ukuran gelang KLY untuk memastikan kamu mendapatkan ukuran yang paling pas dan nyaman digunakan sehari-hari.</p>
+  </section>
+
+  <!-- TABLE -->
+<div class="table-container">
+  <table>
+    <tr>
+      <th>Size</th>
+      <th>Panjang (cm)</th>
+      <th>Kecocokan Pergelangan (cm)</th>
+      <th>Keterangan</th>
+    </tr>
+
+    <tr>
+      <td>6</td>
+      <td>14 cm</td>
+      <td>12 – 13 cm</td>
+      <td>Untuk pergelangan sangat kecil</td>
+    </tr>
+
+    <tr>
+      <td>7</td>
+      <td>15 cm</td>
+      <td>13 – 14 cm</td>
+      <td>Ukuran kecil</td>
+    </tr>
+
+    <tr>
+      <td>8</td>
+      <td>16 cm</td>
+      <td>14 – 15 cm</td>
+      <td>Pergelangan kecil–sedang</td>
+    </tr>
+
+    <tr>
+      <td>9</td>
+      <td>17 cm</td>
+      <td>15 – 16 cm</td>
+      <td>Ukuran standar</td>
+    </tr>
+
+    <tr>
+      <td>10</td>
+      <td>18 cm</td>
+      <td>16 – 17 cm</td>
+      <td>Standar agak besar</td>
+    </tr>
+
+    <tr>
+      <td>11</td>
+      <td>19 cm</td>
+      <td>17 – 18 cm</td>
+      <td>Pergelangan besar</td>
+    </tr>
+
+    <tr>
+      <td>12</td>
+      <td>20 cm</td>
+      <td>18 – 19 cm</td>
+      <td>Untuk pergelangan besar</td>
+    </tr>
+
+  </table>
+    <div class="note">*Pengukuran dapat berbeda ±0.5 cm tergantung model gelang.</div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+
+      <div>
+        <h4>KLY STORE</h4>
+        <p>Toko Aksesoris handmade yang dibuat secara eksklusif untuk mempercantik style kamu.</p><br>
+        <p>Email: support@kly.com</p>
+        <p>Telepon: +62 853 1111 2222</p>
+      </div>
+
+      <div>
+        <h4>LAYANAN</h4>
+        <p>Bantuan</p>
+        <p>Pengembalian</p>
+        <p>Konfirmasi Pembayaran</p>
+        <p>Promo Partner</p>
+      </div>
+
+      <div>
+        <h4>TENTANG KAMI</h4>
+        <p>About Us</p>
+        <p>Karir</p>
+        <p>Kebijakan Privasi</p>
+        <p>Syarat & Ketentuan</p>
+      </div>
+
+      <div>
+        <h4>BERGABUNG DENGAN KAMI</h4>
+        <p>Dapatkan info produk terbaru & promo spesial!</p>
+
+        <input class="email-box" type="email" placeholder="Masukkan email kamu">
+
+        <button class="gender-btn">WANITA</button>
+        <button class="gender-btn">PRIA</button>
+
+        <p style="font-size:12px;margin-top:10px;">Dengan mendaftar, Anda menyetujui kebijakan privasi kami.</p>
+      </div>
+
+    </div>
+  </footer>
+</body>
+</html>

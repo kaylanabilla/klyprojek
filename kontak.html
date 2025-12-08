@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KLY — Kontak</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --pink:#f7d6d2;
+      --pink-soft:#f3c5c1;
+      --dark-pink:#ce8a89;
+      --text:#5b2a2a;
+      --white:#ffffff;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      font-family:Poppins, Arial, sans-serif;
+      background:#faf5f3;
+      color:var(--text);
+    }
+
+    /* NAVBAR */
+    nav{
+      width:100%;
+      background:var(--pink);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.05);
+    }
+    nav .logo{
+      font-size:24px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-family:"Playfair Display", serif;
+    }
+    nav ul{
+      list-style:none;
+      display:flex;
+      gap:28px;
+    }
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:500;
+      transition:.2s;
+    }
+    nav a:hover{color:var(--dark-pink)}
+
+    /* HEADER */
+    .header{
+      text-align:center;
+      padding:60px 20px 20px;
+    }
+    .header h1{
+      font-family:'Playfair Display', serif;
+      font-size:48px;
+      color:var(--dark-pink);
+    }
+    .header p{
+      margin-top:14px;
+      font-size:17px;
+      max-width:700px;
+      margin-left:auto;margin-right:auto;
+      color:#966;
+    }
+
+    /* CONTACT BOX */
+    .contact-container{
+      max-width:900px;
+      margin:40px auto 80px;
+      background:var(--white);
+      padding:40px;
+      border-radius:14px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.08);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+    }
+
+    .contact-info h2{
+      font-family:'Playfair Display', serif;
+      color:var(--dark-pink);
+      font-size:32px;
+      margin-bottom:12px;
+    }
+    .contact-info p{
+      margin-bottom:14px;
+      line-height:1.6;
+      color:#7a4b4b;
+    }
+
+    .contact-info .item{
+      margin-bottom:20px;
+    }
+    .item b{color:var(--dark-pink)}
+
+    /* FORM */
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    input, textarea{
+      padding:14px;
+      border:1px solid #e1bcbc;
+      border-radius:8px;
+      font-size:15px;
+      outline:none;
+      background:#fff7f7;
+      transition:.2s;
+    }
+    input:focus, textarea:focus{
+      border-color:var(--dark-pink);
+      background:#fff;
+      box-shadow:0 0 6px rgba(206,138,137,0.4);
+    }
+
+    textarea{resize:none;height:140px}
+
+    button{
+      padding:14px;
+      border:none;
+      background:var(--dark-pink);
+      color:white;
+      font-size:16px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:.2s;
+    }
+    button:hover{
+      background:#b07170;
+    }
+
+    /* FOOTER */
+    footer{
+      background:var(--pink);
+      color:var(--text);
+      padding:45px 40px;
+      margin-top:40px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:60px;
+      margin-bottom:40px;
+    }
+
+    footer h4{
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:18px;
+    }
+
+    footer p, footer li{
+      font-size:14px;
+      opacity:0.9;
+      line-height:1.7;
+      margin-bottom:8px;
+      list-style:none;
+    }
+
+    .email-box{
+      width:100%;
+      padding:14px 12px;
+      font-size:15px;
+      border-radius:6px;
+      border:none;
+      margin:8px 0 18px;
+    }
+
+    .gender-btn{
+      border:1px solid var(--text);
+      background:none;
+      padding:10px 18px;
+      margin-right:10px;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .gender-btn:hover{
+      background:var(--white);
+    }
+    
+    /* RESPONSIVE */
+    @media(max-width:800px){
+      .contact-container{grid-template-columns:1fr}
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">🦋 KLY</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="katalog.html">Katalog</a></li>
+      <li><a href="size.html">Size Chart</a></li>
+      <li><a href="kontak.html">Kontak</a></li>
+      <li><a href="#">🔍</a></li>
+    </ul>
+      <div class="menu-toggle" onclick="toggleMenu()"></div>
+  </nav>
+
+  <!-- HEADING -->
+  <section class="header">
+    <h1>Hubungi Kami</h1>
+    <p>Kami siap membantu! Silakan hubungi tim KLY untuk pertanyaan, pemesanan, atau kerja sama.</p>
+  </section>
+
+  <!-- CONTACT AREA -->
+  <div class="contact-container">
+
+    <!-- LEFT: INFO -->
+    <div class="contact-info">
+      <h2>Informasi Kontak</h2>
+
+      <div class="item">
+        <p><b>WhatsApp:</b><br> +62 812-3456-7890</p>
+      </div>
+
+      <div class="item">
+        <p><b>Email:</b><br> hello.kly@gmail.com</p>
+      </div>
+
+      <div class="item">
+        <p><b>Instagram:</b><br> @kly_jewelry</p>
+      </div>
+
+      <div class="item">
+        <p><b>Alamat:</b><br> Bandung, Jawa Barat</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: FORM -->
+    <form>
+      <input type="text" placeholder="Nama Lengkap" required>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Subjek Pesan" required>
+      <textarea placeholder="Tulis pesan kamu…"></textarea>
+      <button>Kirim Pesan</button>
+    </form>
+
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+
+      <div>
+        <h4>KLY STORE</h4>
+        <p>Toko Aksesoris handmade yang dibuat secara eksklusif untuk mempercantik style kamu.</p><br>
+        <p>Email: support@kly.com</p>
+        <p>Telepon: +62 853 1111 2222</p>
+      </div>
+
+      <div>
+        <h4>LAYANAN</h4>
+        <p>Bantuan</p>
+        <p>Pengembalian</p>
+        <p>Konfirmasi Pembayaran</p>
+        <p>Promo Partner</p>
+      </div>
+
+      <div>
+        <h4>TENTANG KAMI</h4>
+        <p>About Us</p>
+        <p>Karir</p>
+        <p>Kebijakan Privasi</p>
+        <p>Syarat & Ketentuan</p>
+      </div>
+
+      <div>
+        <h4>BERGABUNG DENGAN KAMI</h4>
+        <p>Dapatkan info produk terbaru & promo spesial!</p>
+
+        <input class="email-box" type="email" placeholder="Masukkan email kamu">
+
+        <button class="gender-btn">WANITA</button>
+        <button class="gender-btn">PRIA</button>
+
+        <p style="font-size:12px;margin-top:10px;">Dengan mendaftar, Anda menyetujui kebijakan privasi kami.</p>
+      </div>
+
+    </div>
+  </footer>
+</body>
+</html>

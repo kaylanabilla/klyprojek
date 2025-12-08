@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KLY — Katalog</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+:root{
+  --pink:#f7d6d2;
+  --pink-soft:#f3c5c1;
+  --dark-pink:#ce8a89;
+  --text:#5b2a2a;
+  --white:#ffffff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:Poppins, Arial, sans-serif;
+  background:#faf5f3;
+  color:var(--text);
+}
+
+/* NAVBAR */
+    nav{
+      width:100%;
+      background:var(--pink);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 40px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.05);
+      position:sticky;
+      top:0;
+      z-index:1000;
+    }
+
+    nav .logo{
+      font-size:24px;
+      font-weight:600;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-family:"Playfair Display", serif;
+      color:var(--text);
+    }
+
+    nav ul{
+      list-style:none;
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:500;
+      transition:0.2s;
+    }
+
+    nav a:hover{
+      color:var(--dark-pink);
+    }
+
+.cart-btn{
+  background:var(--pink-soft);
+  padding:8px 14px;
+  border-radius:50px;
+  cursor:pointer;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+.container{width:90%;margin:40px auto;}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:30px;
+  justify-items:center;
+}
+.card{text-align:center;width:100%;}
+.card img{width:100%;height:230px;object-fit:cover;border-radius:6px;}
+.nama{font-size:18px;font-weight:600;margin-top:12px;}
+.harga{font-size:17px;font-weight:700;color:#d47f7f;margin:4px 0 8px;}
+
+.card button{
+  margin-top:10px;
+  background:var(--dark-pink);
+  border:none;
+  padding:10px 18px;
+  color:var(--white);
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+}
+.card button:hover{background:#b36f6e}
+
+/* POPUP MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.3);
+  justify-content:center;align-items:center;
+  z-index: 2000; 
+}
+
+.modal-content{
+  background:var(--white);
+  width:350px;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+select{
+  width:100%;
+  padding:10px;
+  border:2px solid var(--pink-soft);
+  border-radius:6px;
+  margin:10px 0;
+}
+
+/* INPUT FORM */
+.modal input[type="text"], .modal textarea{
+  width:100%;
+  padding:10px;
+  margin: 8px 0;
+  border:2px solid var(--pink-soft);
+  border-radius:6px;
+  box-sizing: border-box;
+}
+.modal textarea{resize:vertical;}
+.modal label{display:block;text-align:left;margin-top:10px;font-weight:600;}
+
+/* JUMLAH */
+.qty-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:10px;
+}
+
+.qty-box .minus,
+.qty-box .plus{
+  width:40px;
+  height:40px;
+  background:var(--pink-soft);
+  border:none;
+  border-radius:10px;
+  font-size:22px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+#quantityValue{
+  font-size:20px;
+  font-weight:700;
+  width:25px;
+  text-align:center;
+  display:inline-block;
+}
+
+.modal button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  font-weight:600;
+  border-radius:6px;
+  cursor:pointer;
+}
+.tambah{background:var(--dark-pink);color:#fff}
+.pesan-now{background:var(--pink-soft);color:var(--text)}
+.close{background:#ddd}
+
+/* CART POPUP */
+#cartPopup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.3);justify-content:center;align-items:center;z-index:2000;}
+
+.cart-box{
+  background:#fff;width:450px;padding:18px;border-radius:14px;text-align:center;
+}
+
+.cart-box table{width:100%;margin-top:10px;border-collapse:collapse}
+.cart-box th, .cart-box td{border:1px solid #f1b5b4;padding:6px;font-size:14px;}
+
+.cart-box button{
+  width:100%;padding:10px;margin-top:8px;border:none;border-radius:6px;font-weight:600;
+}
+.checkout{background:var(--dark-pink);color:#fff}
+.clear{background:#b36f6e;color:white}
+.close-cart{background:#ddd;color:#333}
+
+/* PAYMENT POPUP & RECEIPT */
+#paymentPopup .modal-content, #customerFormPopup .modal-content, #receiptPopup .modal-content{width:400px;}
+#paymentPopup h2, #customerFormPopup h2, #receiptPopup h2{margin-bottom:15px;}
+#receiptPopup .modal-content{text-align:left;}
+#receiptPopup p{margin: 5px 0;}
+#receiptPopup hr{border: 0; border-top: 1px dashed #5b2a2a; margin: 10px 0;}
+#receiptPopup .total-line{display:flex; justify-content:space-between; font-weight: 600;}
+#receiptPopup table{width:100%; margin-bottom: 10px;}
+#receiptPopup th, #receiptPopup td{padding: 2px 0; border: none; font-size: 13px;}
+#receiptPopup td:nth-child(2){text-align: right;}
+#receiptPopup .final-price{font-size: 18px; color: var(--dark-pink); margin-top: 10px;}
+#receiptPopup .btn-confirm{margin-top: 15px; background: #61b861; color: white;}
+#receiptPopup .btn-cancel{background: #ddd; color: #333;}
+
+/* FOOTER */
+    footer{
+      background:var(--pink);
+      color:var(--text);
+      padding:45px 40px;
+      margin-top:40px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+      gap:60px;
+      margin-bottom:40px;
+    }
+
+    footer h4{
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:18px;
+    }
+
+    footer p, footer li{
+      font-size:14px;
+      opacity:0.9;
+      line-height:1.7;
+      margin-bottom:8px;
+      list-style:none;
+    }
+
+    .email-box{
+      width:100%;
+      padding:14px 12px;
+      font-size:15px;
+      border-radius:6px;
+      border:none;
+      margin:8px 0 18px;
+    }
+
+    .gender-btn{
+      border:1px solid var(--text);
+      background:none;
+      padding:10px 18px;
+      margin-right:10px;
+      color:var(--text);
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .gender-btn:hover{
+      background:var(--white);
+    }
+
+  </style>
+</head>
+
+
+<body>
+  
+<nav>
+  <div class="logo">🦋 KLY</div>
+
+  <ul id="navbarMenu">
+        <li><a href="index.html">Home</a></li>
+      <li><a href="katalog.html">Katalog</a></li>
+      <li><a href="size.html">Size Chart</a></li>
+      <li><a href="kontak.html">Kontak</a></li>
+    <li>
+      <div class="cart-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></div>
+    </li>
+  </ul>
+
+  <div class="menu-toggle" onclick="toggleMenu()"></div>
+</nav>
+
+<div class="container">
+  <div class="grid">
+
+    <div class="card">
+      <img src="1.jpeg" alt="">
+      <div class="nama">Gelang Velvet Charm</div>
+      <div class="harga" data-harga="55000">Rp 55.000</div>
+      <button onclick="openModal('Gelang Velvet Charm', 55000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98x-lq5qmilq27lyc6@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Crystal Dew</div>
+      <div class="harga" data-harga="55000">Rp 55.000</div>
+      <button onclick="openModal('Gelang Crystal Dew', 55000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98o-llughoaoqcroc5@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Golden Serenity</div>
+      <div class="harga" data-harga="55000">Rp 55.000</div>
+      <button onclick="openModal('Gelang Golden Serenity', 55000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="4.jpeg" alt="">
+      <div class="nama">Gelang Silver Whisper</div>
+      <div class="harga" data-harga="55000">Rp 55.000</div>
+      <button onclick="openModal('Gelang Silver Whisper', 55000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/bb91ab9e737853502b8f2da9b5820db6@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Dreamy Lace</div>
+      <div class="harga" data-harga="45000">Rp 45.000</div>
+      <button onclick="openModal('Gelang Dreamy Lace', 45000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7qul1-ljkngwqy9s8227@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Rantai</div>
+      <div class="harga" data-harga="95000">Rp 95.000</div>
+      <button onclick="openModal('Gelang Rantai', 95000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98w-lzeaiyaaaspnfc@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Midnight Sparkle</div>
+      <div class="harga" data-harga="85000">Rp 85.000</div>
+      <button onclick="openModal('Gelang Midnight Sparkle', 85000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7r98w-lp0c1l2xwvil63@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Roseglow Chain</div>
+      <div class="harga" data-harga="65000">Rp 65.000</div>
+      <button onclick="openModal('Gelang Roseglow Chain', 65000)">Pesan</button>
+    </div>
+
+    <div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7qul0-lih6jo21cfh3c2@resize_w450_nl.webp" alt="">
+      <div class="nama">Gelang Luna Mirage</div>
+      <div class="harga" data-harga="95000">Rp 95.000</div>
+      <button onclick="openModal('Gelang Luna Mirage', 95000)">Pesan</button>
+    </div>
+
+<div class="card">
+      <img src="https://down-id.img.susercontent.com/file/id-11134207-7rbk8-mart659dim6075@resize_w450_nl.webp" alt="">
+      <div class="nama">GGelang Crystal Amora</div>
+      <div class="harga" data-harga="75000">Rp 75.000</div>
+      <button onclick="openModal('Gelang Crystal Amora', 75000)">Pesan</button>
+    </div>
+
+  </div>
+</div>
+
+<div id="popup" class="modal">
+  <div class="modal-content">
+    <h3 id="nama-produk"></h3>
+
+    <label>Pilih Warna</label>
+    <select id="warna">
+      <option>Rose Gold</option><option>Silver</option><option>Gold</option>
+    </select>
+
+    <label>Pilih Size</label>
+    <select id="size">
+      <option>6</option><option>7</option><option>8</option><option>9</option>
+      <option>10</option><option>11</option><option>12</option>
+    </select>
+
+    <label>Jumlah:</label>
+    <div class="qty-box">
+      <button class="minus" onclick="updateQuantity(-1)">-</button>
+      <span id="quantityValue">1</span>
+      <button class="plus" onclick="updateQuantity(1)">+</button>
+    </div>
+
+    <button class="pesan-now" onclick="openCustomerForm('single')">Pesan Sekarang</button>
+    <button class="tambah" onclick="tambahKeranjang()">Tambahkan Keranjang</button>
+    <button class="close" onclick="closeModal()">Batal</button>
+  </div>
+</div>
+
+<div id="cartPopup">
+  <div class="cart-box">
+    <h2>Keranjang Belanja 🛒</h2>
+
+    <table>
+      <thead>
+      <tr><th>Produk</th><th>Size</th><th>Qty</th><th>Total</th></tr>
+      </thead>
+      <tbody id="cartItems"></tbody>
+    </table>
+
+    <p id="itemCount"></p>
+    <p id="totalPrice"></p>
+
+    <button class="checkout" onclick="openCustomerForm('cart')">Checkout</button>
+    <button class="clear" onclick="clearCart()">Hapus Semua</button>
+    <button class="close-cart" onclick="closeCart()">Tutup</button>
+  </div>
+</div>
+
+<div id="customerFormPopup" class="modal">
+  <div class="modal-content">
+    <h2>Detail Pengiriman</h2>
+    <form id="customerForm">
+      <label for="customerName">Nama Lengkap:</label>
+      <input type="text" id="customerName" required>
+      <label for="customerPhone">No. Telepon (WA):</label>
+      <input type="text" id="customerPhone" required>
+      <label for="customerAddress">Alamat Lengkap:</label>
+      <textarea id="customerAddress" rows="3" required></textarea>
+      
+      <button type="button" class="tambah" id="formSubmitButton" onclick="submitForm()">Lanjut Pembayaran</button>
+      <button type="button" class="close" onclick="closeCustomerForm()">Batal</button>
+    </form>
+  </div>
+</div>
+
+<div id="paymentPopup" class="modal">
+  <div class="modal-content">
+    <h2>Pilih Metode Pembayaran</h2>
+    <button class="tambah" onclick="prepReceipt('COD')">Pembayaran COD</button>
+    <button class="tambah" onclick="prepReceipt('VA')">Pembayaran VA (Pajak 2%)</button>
+    <button class="pesan-now" onclick="prepReceipt('WA')">Pesan via WhatsApp</button>
+    <button class="close" onclick="closePayment()">Batal</button>
+  </div>
+</div>
+
+<div id="receiptPopup" class="modal">
+  <div class="modal-content">
+    <h2 style="text-align: center;">STRUK PEMBELIAN</h2>
+    <p style="text-align: center;">-----------------------------------</p>
+    <p>Tanggal: <span id="receiptDate"></span></p>
+    <p>Metode Pembayaran: **<span id="receiptMethod"></span>**</p>
+    <hr>
+    
+    <p>Nama Pelanggan: **<span id="receiptName"></span>**</p>
+    <p>Alamat Pengiriman: <span id="receiptAddress"></span></p>
+    <hr>
+
+    <table>
+      <thead>
+        <tr><th>Produk</th><th>Qty x Harga</th></tr>
+      </thead>
+      <tbody id="receiptItems"></tbody>
+    </table>
+    <hr>
+    
+    <div id="receiptSummary"></div>
+
+    <p style="text-align: center; margin-top: 15px;">**HARAP PERIKSA KEMBALI DETAIL DI ATAS**</p>
+
+    <button class="tambah btn-confirm" onclick="confirmOrderAndSendWA()">Konfirmasi & Kirim WA</button>
+    
+    <button class="close btn-cancel" onclick="cancelReceipt()">Ubah Pesanan/Batal</button>
+  </div>
+</div>
+
+<div id="singleReceiptPopup" class="modal">
+  <div class="modal-content">
+    <h2 style="text-align: center;">STRUK PESANAN LANGSUNG</h2>
+    <p style="text-align: center;">-----------------------------------</p>
+    <p>Tanggal: <span id="sReceiptDate"></span></p>
+    <p>Metode Pembayaran: **WhatsApp**</p>
+    <hr>
+    
+    <p>Nama Pelanggan: **<span id="sReceiptName"></span>**</p>
+    <p>Alamat Pengiriman: <span id="sReceiptAddress"></span></p>
+    <hr>
+    
+    <table style="text-align: left;">
+      <tr><td style="font-weight: 600;">Produk:</td><td id="sReceiptProduct"></td></tr>
+      <tr><td style="font-weight: 600;">Warna/Size:</td><td id="sReceiptColorSize"></td></tr>
+      <tr><td style="font-weight: 600;">Jumlah:</td><td id="sReceiptQty"></td></tr>
+    </table>
+    <hr>
+    
+    <div id="sReceiptSummary"></div>
+
+    <p style="text-align: center; margin-top: 15px;">**HARAP PERIKSA KEMBALI DETAIL DI ATAS**</p>
+
+    <button class="tambah btn-confirm" onclick="confirmSingleOrderAndSendWA()">Konfirmasi & Kirim WA</button>
+    
+    <button class="close btn-cancel" onclick="closeSingleReceipt()">Ubah Pesanan/Batal</button>
+  </div>
+</div>
+
+<script>
+let selectedProduct = "";
+let selectedPrice = 0;
+let quantity = 1;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let currentFlow = ""; 
+let selectedPaymentMethod = ""; // Menyimpan metode pembayaran yang dipilih
+const DISCOUNT_RATE = 0.20; // 20% Diskon
+
+let customerData = {
+  name: "",
+  phone: "",
+  address: ""
+};
+
+document.getElementById("cartCount").innerText = totalQty();
+
+// --- MODAL & QTY START ---
+function openModal(nama,harga){
+  selectedProduct = nama;
+  selectedPrice = harga;
+  quantity = 1;
+  document.getElementById("quantityValue").innerText = 1;
+  document.getElementById("popup").style.display="flex";
+  document.getElementById("nama-produk").innerText=nama;
+}
+
+function closeModal(){
+  document.getElementById("popup").style.display="none";
+}
+
+function updateQuantity(num){
+  quantity += num;
+  if(quantity < 1) quantity = 1;
+  document.getElementById("quantityValue").innerText = quantity;
+}
+// --- MODAL & QTY END ---
+
+
+// --- KERANJANG & HARGA START ---
+function tambahKeranjang(){
+  let item = {
+    nama:selectedProduct,
+    warna:document.getElementById("warna").value,
+    size:document.getElementById("size").value,
+    harga:selectedPrice,
+    qty:quantity
+  };
+
+  cart.push(item);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  document.getElementById("cartCount").innerText = totalQty();
+  closeModal();
+  updateCart();
+}
+
+function totalQty(){
+  return cart.reduce((sum,item)=>sum+item.qty,0);
+}
+
+function openCart(){
+  updateCart();
+  document.getElementById("cartPopup").style.display="flex";
+}
+
+function closeCart(){
+  document.getElementById("cartPopup").style.display="none";
+}
+
+function calculateBaseTotal(){
+  // Menghitung total barang di keranjang
+  return cart.reduce((sum,item)=>sum + (item.harga*item.qty),0);
+}
+
+function calculateDiscountedTotal(baseTotal){
+  return baseTotal * (1 - DISCOUNT_RATE);
+}
+
+function updateCart(){
+  const cartItems=document.getElementById("cartItems");
+  cartItems.innerHTML="";
+  let baseTotal=calculateBaseTotal();
+  let discountAmount = baseTotal * DISCOUNT_RATE;
+  let discountedTotal = calculateDiscountedTotal(baseTotal);
+  let pajakVA = discountedTotal * 0.02;
+  let totalVA = discountedTotal + pajakVA;
+
+  cart.forEach((item,index)=>{
+    let subtotal=item.harga * item.qty;
+    cartItems.innerHTML+=`
+      <tr>
+        <td>${item.nama}</td>
+        <td>${item.size}</td>
+        <td>${item.qty}</td>
+        <td>Rp ${subtotal.toLocaleString()}</td>
+      </tr>`;
+  });
+
+  document.getElementById("itemCount").innerText=`Total Item: ${totalQty()}`;
+  document.getElementById("totalPrice").innerHTML=
+  `Total Awal: Rp ${baseTotal.toLocaleString()} <br>
+   **Diskon 20%:** Rp ${discountAmount.toLocaleString()} <br>
+   **Total Setelah Diskon:** Rp ${discountedTotal.toLocaleString()} <br>
+   Pajak VA (2%): Rp ${pajakVA.toLocaleString()} <br>
+   **Total Akhir VA:** Rp ${totalVA.toLocaleString()}`;
+}
+
+function clearCart(){
+  cart=[];
+  localStorage.removeItem("cart");
+  document.getElementById("cartCount").innerText=0;
+  updateCart();
+}
+// --- KERANJANG & HARGA END ---
+
+// --- FORMULIR PELANGGAN START ---
+function openCustomerForm(flow){
+  currentFlow = flow; 
+  if(flow === 'cart' && cart.length === 0){
+    alert("Keranjang belanja kosong!");
+    closeCart();
+    return;
+  }
+  
+  if(flow === 'single'){
+    document.getElementById("formSubmitButton").innerText = "Lanjut Pesan WA";
+  } else {
+    document.getElementById("formSubmitButton").innerText = "Lanjut Pembayaran";
+  }
+
+  document.getElementById("customerName").value = customerData.name;
+  document.getElementById("customerPhone").value = customerData.phone;
+  document.getElementById("customerAddress").value = customerData.address;
+
+  document.getElementById("customerFormPopup").style.display="flex";
+
+  if(flow === 'single'){
+    closeModal();
+  } else {
+    closeCart();
+  }
+}
+
+function closeCustomerForm(){
+  document.getElementById("customerFormPopup").style.display="none";
+}
+
+function submitForm(){
+  let name = document.getElementById("customerName").value.trim();
+  let phone = document.getElementById("customerPhone").value.trim();
+  let address = document.getElementById("customerAddress").value.trim();
+
+  if(name === "" || phone === "" || address === ""){
+    alert("Harap lengkapi semua data pelanggan!");
+    return;
+  }
+
+  customerData = {name, phone, address};
+  
+  closeCustomerForm();
+
+  if(currentFlow === 'single'){
+    showSingleReceipt(); // Langsung tampilkan struk item tunggal
+  } else {
+    openPayment(); // Lanjut ke pemilihan pembayaran (untuk cart)
+  }
+}
+// --- FORMULIR PELANGGAN END ---
+
+
+// --- PAYMENT & RECEIPT (CART) START ---
+function openPayment(){
+  if(cart.length === 0){
+    alert("Keranjang belanja kosong!");
+    return;
+  }
+  document.getElementById("paymentPopup").style.display="flex";
+}
+
+function closePayment(){
+  document.getElementById("paymentPopup").style.display="none";
+}
+
+function getTotalByMethod(method){
+  let baseTotal = calculateBaseTotal();
+  let discountedTotal = calculateDiscountedTotal(baseTotal);
+  
+  if(method === 'VA'){
+    let pajak = discountedTotal * 0.02;
+    return discountedTotal + pajak;
+  } else if (method === 'COD' || method === 'WA'){
+    return discountedTotal;
+  }
+  return 0;
+}
+
+function prepReceipt(method){
+    selectedPaymentMethod = method; // Simpan metode yang dipilih
+    closePayment();
+    showReceipt(method); // Tampilkan struk terlebih dahulu
+}
+
+function showReceipt(method){
+  const receiptItems = document.getElementById("receiptItems");
+  const receiptSummary = document.getElementById("receiptSummary");
+  
+  let baseTotal = calculateBaseTotal();
+  let discountedTotal = calculateDiscountedTotal(baseTotal);
+  let discountAmount = baseTotal * DISCOUNT_RATE;
+  let pajakVA = 0;
+  let finalTotal = getTotalByMethod(method);
+  let totalLabel = "TOTAL BAYAR";
+  let note = "Klik Konfirmasi untuk mengirim pesanan ke WhatsApp admin.";
+
+  if (method === 'VA') {
+      pajakVA = discountedTotal * 0.02;
+      totalLabel = "TOTAL TRANSFER VA";
+  } else if (method === 'COD') {
+      totalLabel = "TOTAL BAYAR COD";
+  } else if (method === 'WA') {
+      totalLabel = "TOTAL PESANAN";
+  }
+
+  // Set data umum struk
+  document.getElementById("receiptDate").innerText = new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+  document.getElementById("receiptMethod").innerText = method;
+  document.getElementById("receiptName").innerText = customerData.name;
+  document.getElementById("receiptAddress").innerText = customerData.address;
+
+  // Set Item list
+  receiptItems.innerHTML = "";
+  cart.forEach(item => {
+    let subtotal = item.harga * item.qty;
+    receiptItems.innerHTML += `
+      <tr>
+        <td>${item.nama} (${item.size}, ${item.warna})</td>
+        <td>${item.qty} x Rp ${item.harga.toLocaleString()}</td>
+      </tr>`;
+  });
+
+  // Set Summary
+  let pajakLine = method === 'VA' ? 
+      `<div class="total-line"><span>Pajak VA (2%):</span><span>+ Rp ${pajakVA.toLocaleString()}</span></div>` : '';
+  
+  receiptSummary.innerHTML = `
+    <div class="total-line"><span>Subtotal Awal:</span><span>Rp ${baseTotal.toLocaleString()}</span></div>
+    <div class="total-line"><span>Diskon (20%):</span><span>- Rp ${discountAmount.toLocaleString()}</span></div>
+    <div class="total-line"><span>Total Setelah Diskon:</span><span>Rp ${discountedTotal.toLocaleString()}</span></div>
+    ${pajakLine}
+    <hr>
+    <div class="total-line final-price"><span>${totalLabel}:</span><span>Rp ${finalTotal.toLocaleString()}</span></div>
+    <p style="font-size: 12px; text-align: center; margin-top: 10px;">${note}</p>
+  `;
+
+  document.getElementById("receiptPopup").style.display = "flex";
+}
+
+function closeReceipt(){
+  document.getElementById("receiptPopup").style.display = "none";
+  // Kembali ke halaman pembayaran jika batal, atau ke home jika tidak ada item
+  if(cart.length > 0){
+    openPayment(); 
+  }
+}
+
+function cancelReceipt(){
+  // Jika customer batal di halaman struk, hapus item dari cart dan kembali ke list product
+  clearCart();
+  closeReceipt(); // Tutup struk, yang akan memanggil openPayment() (jika cart > 0)
+}
+
+function confirmOrderAndSendWA(){
+    let total = getTotalByMethod(selectedPaymentMethod);
+    let message = formatWAMessage(selectedPaymentMethod, total);
+    
+    // Kirim pesan WA
+    window.open(`https://wa.me/6281289872249?text=${message}`,"_blank");
+
+    // Tampilkan notifikasi (opsional, karena WA sudah terbuka)
+    alert(`Pesanan berhasil dikonfirmasi! Detail pesanan akan dikirimkan ke WhatsApp admin.\nTotal Bayar: Rp ${total.toLocaleString()}`);
+
+    // Kosongkan keranjang dan tutup struk
+    clearCart();
+    document.getElementById("receiptPopup").style.display = "none";
+}
+
+function formatWAMessage(method, finalTotal){
+    let baseTotal = calculateBaseTotal();
+    let discountedTotal = calculateDiscountedTotal(baseTotal);
+    let discountAmount = baseTotal * DISCOUNT_RATE;
+    let pajak = discountedTotal * 0.02;
+
+    let message = `Halo admin, saya ingin checkout pesanan (%0A Metode: ${method}):%0A%0A`;
+    
+    // Tambah detail pelanggan
+    message += `*--- DATA PEMBELI ---*%0A`;
+    message += `Nama: ${customerData.name}%0A`;
+    message += `Telp: ${customerData.phone}%0A`;
+    message += `Alamat: ${customerData.address}%0A%0A`;
+    
+    message += `*--- DETAIL PESANAN ---*%0A`;
+    cart.forEach(item=>{
+        message += `• ${item.nama} | Size: ${item.size} | Warna: ${item.warna} | Qty: ${item.qty} | Subtotal: Rp ${(item.harga*item.qty).toLocaleString()}%0A`;
+    });
+
+    message += `%0A*--- TOTAL HARGA ---*%0A`;
+    message += `Total Awal: Rp ${baseTotal.toLocaleString()}%0A`;
+    message += `Diskon 20%: - Rp ${discountAmount.toLocaleString()}%0A`;
+    message += `Total Setelah Diskon: Rp ${discountedTotal.toLocaleString()}%0A`;
+    if(method === 'VA'){
+      message += `Pajak 2% (VA): + Rp ${pajak.toLocaleString()}%0A`;
+      message += `**Total Akhir (VA):** Rp ${finalTotal.toLocaleString()}%0A%0A`;
+    } else {
+      message += `**Total Akhir (${method}):** Rp ${finalTotal.toLocaleString()}%0A%0A`;
+    }
+    
+    message += `Mohon diproses ya kak 🙏`;
+    return message;
+}
+// --- PAYMENT & RECEIPT (CART) END ---
+
+
+// --- RECEIPT (SINGLE ITEM) START ---
+
+function showSingleReceipt(){
+    let totalAwal = selectedPrice * quantity;
+    let diskon = totalAwal * DISCOUNT_RATE;
+    let totalHargaAkhir = totalAwal - diskon;
+
+    document.getElementById("sReceiptDate").innerText = new Date().toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+    document.getElementById("sReceiptName").innerText = customerData.name;
+    document.getElementById("sReceiptAddress").innerText = customerData.address;
+    
+    document.getElementById("sReceiptProduct").innerText = selectedProduct;
+    document.getElementById("sReceiptColorSize").innerText = `${document.getElementById("warna").value}, Size: ${document.getElementById("size").value}`;
+    document.getElementById("sReceiptQty").innerText = quantity;
+
+    document.getElementById("sReceiptSummary").innerHTML = `
+      <div class="total-line"><span>Harga Awal:</span><span>Rp ${totalAwal.toLocaleString()}</span></div>
+      <div class="total-line"><span>Diskon (20%):</span><span>- Rp ${diskon.toLocaleString()}</span></div>
+      <hr>
+      <div class="total-line final-price"><span>TOTAL BAYAR:</span><span>Rp ${totalHargaAkhir.toLocaleString()}</span></div>
+    `;
+
+    document.getElementById("singleReceiptPopup").style.display = "flex";
+}
+
+function closeSingleReceipt(){
+    document.getElementById("singleReceiptPopup").style.display = "none";
+    // Kembali ke modal detail produk
+    openModal(selectedProduct, selectedPrice); 
+}
+
+function confirmSingleOrderAndSendWA(){
+    let totalAwal = selectedPrice * quantity;
+    let diskon = totalAwal * DISCOUNT_RATE;
+    let totalHargaAkhir = totalAwal - diskon;
+
+    let message = `Halo admin, saya ingin memesan produk berikut (Pesan Langsung):%0A%0A`;
+
+    message += `*--- DATA PEMBELI ---*%0A`;
+    message += `Nama: ${customerData.name}%0A`;
+    message += `Telp: ${customerData.phone}%0A`;
+    message += `Alamat: ${customerData.address}%0A%0A`;
+    
+    message += `*--- DETAIL PESANAN ---*%0A`;
+    message += `Produk: ${selectedProduct}%0A`;
+    message += `Warna: ${document.getElementById("warna").value}%0A`;
+    message += `Size: ${document.getElementById("size").value}%0A`;
+    message += `Jumlah: ${quantity}%0A`;
+    message += `Total Awal: Rp ${totalAwal.toLocaleString()}%0A`;
+    message += `Diskon 20%: Rp ${diskon.toLocaleString()}%0A`;
+    message += `**Total Akhir:** Rp ${totalHargaAkhir.toLocaleString()}%0A%0A`;
+    message += `Mohon diproses segera 🙏`;
+
+    window.open(`https://wa.me/6281289872249?text=${message}`,"_blank");
+    
+    // Tutup struk setelah kirim WA
+    document.getElementById("singleReceiptPopup").style.display = "none";
+}
+// --- RECEIPT (SINGLE ITEM) END ---
+</script>
+
+  <footer>
+    <div class="footer-grid">
+
+      <div>
+        <h4>KLY STORE</h4>
+        <p>Toko Aksesoris handmade yang dibuat secara eksklusif untuk mempercantik style kamu.</p><br>
+        <p>Email: support@kly.com</p>
+        <p>Telepon: +62 853 1111 2222</p>
+      </div>
+
+      <div>
+        <h4>LAYANAN</h4>
+        <p>Bantuan</p>
+        <p>Pengembalian</p>
+        <p>Konfirmasi Pembayaran</p>
+        <p>Promo Partner</p>
+      </div>
+
+      <div>
+        <h4>TENTANG KAMI</h4>
+        <p>About Us</p>
+        <p>Karir</p>
+        <p>Kebijakan Privasi</p>
+        <p>Syarat & Ketentuan</p>
+      </div>
+
+      <div>
+        <h4>BERGABUNG DENGAN KAMI</h4>
+        <p>Dapatkan info produk terbaru & promo spesial!</p>
+
+        <input class="email-box" type="email" placeholder="Masukkan email kamu">
+
+        <button class="gender-btn">WANITA</button>
+        <button class="gender-btn">PRIA</button>
+
+        <p style="font-size:12px;margin-top:10px;">Dengan mendaftar, Anda menyetujui kebijakan privasi kami.</p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
