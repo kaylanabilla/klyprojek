@@ -263,28 +263,54 @@ background:rgba(0,0,0,0.3);justify-content:center;align-items:center;z-index:200
     .gender-btn:hover{
       background:var(--white);
     }
+/* Hamburger menu */
+.hamburger{
+  display:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav ul{
+    display:none;
+    flex-direction:column;
+    gap:15px;
+    background:var(--pink);
+    position:absolute;
+    top:65px;
+    right:40px;
+    width:200px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  }
+  .hamburger{
+    display:block;
+  }
+}
 
   </style>
 </head>
 
 
 <body>
-  
+<!-- NAVBAR -->
 <nav>
   <div class="logo">🦋 KLY</div>
+  
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
 
-  <ul id="navbarMenu">
-        <li><a href="index.html">Home</a></li>
-      <li><a href="katalog.html">Katalog</a></li>
-      <li><a href="size.html">Size Chart</a></li>
-      <li><a href="kontak.html">Kontak</a></li>
-    <li>
-      <div class="cart-btn" onclick="openCart()">🛒 <span id="cartCount">0</span></div>
-    </li>
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="katalog.html">Katalog</a></li>
+    <li><a href="size.html">Size Chart</a></li>
+    <li><a href="kontak.html">Kontak</a></li>
+    <li><a href="#">🔍</a></li>
   </ul>
-
-  <div class="menu-toggle" onclick="toggleMenu()"></div>
 </nav>
+
 
 <div class="container">
   <div class="grid">
@@ -919,6 +945,18 @@ function confirmSingleOrderAndSendWA(){
 
     </div>
   </footer>
+<!-- Tambahkan ini di akhir <body> sebelum </body> -->
+<script>
+  function toggleMenu(){
+    const navLinks = document.getElementById("nav-links");
+    if(navLinks.style.display === "flex"){
+      navLinks.style.display = "none";
+    } else {
+      navLinks.style.display = "flex";
+    }
+  }
+</script>
 
 </body>
+
 </html>
