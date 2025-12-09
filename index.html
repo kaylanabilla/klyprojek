@@ -270,25 +270,54 @@
     .gender-btn:hover{
       background:var(--white);
     }
+/* Hamburger menu */
+.hamburger{
+  display:none;
+  font-size:28px;
+  cursor:pointer;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav ul{
+    display:none;
+    flex-direction:column;
+    gap:15px;
+    background:var(--pink);
+    position:absolute;
+    top:65px;
+    right:40px;
+    width:200px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  }
+  .hamburger{
+    display:block;
+  }
+}
 
   </style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">🦋 KLY</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="katalog.html">Katalog</a></li>
-      <li><a href="size.html">Size Chart</a></li>
-      <li><a href="kontak.html">Kontak</a></li>
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">🦋 KLY</div>
+  
+  <!-- Hamburger -->
+  <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
 
-      <li><a href="#" id="searchBtn">🔍</a></li>
-      <li><input type="text" id="searchInput" placeholder="Cari gelang..."></li>
-    </ul>
-     <div class="menu-toggle" onclick="toggleMenu()"></div>
-  </nav>
+  <ul id="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="katalog.html">Katalog</a></li>
+    <li><a href="size.html">Size Chart</a></li>
+    <li><a href="kontak.html">Kontak</a></li>
+    <li><a href="#">🔍</a></li>
+  </ul>
+</nav>
+
 
   <section class="hero">
     <h2>Bracelet Collection</h2>
@@ -446,8 +475,19 @@
         sliderTrack.style.transform = `translateX(${-index * slideWidth}px)`;
       }
     });
+ 
+  function toggleMenu(){
+    const navLinks = document.getElementById("nav-links");
+    if(navLinks.style.display === "flex"){
+      navLinks.style.display = "none";
+    } else {
+      navLinks.style.display = "flex";
+    }
+  }
+
   </script>
 
 </body>
 </html>
+
 
